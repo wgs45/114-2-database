@@ -1,4 +1,5 @@
 const db = require("./index");
+require("dotenv").config();
 
 console.log("Testing DB export...");
 console.log("db object:", db); // Should not be undefined
