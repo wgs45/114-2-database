@@ -1,4 +1,4 @@
-CREATE RABLE products (
+CREATE TABLE products (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100),
     description TEXT,
@@ -6,11 +6,10 @@ CREATE RABLE products (
     image_url VARCHAR(255)
 );
 
-CREATE TABLE orders {
+CREATE TABLE orders (
     id INT AUTO_INCREMENT PRIMARY KEY,
     customer_name VARCHAR(100),
     total DECIMAL(10, 2),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-};
-
+);
 

@@ -6,7 +6,7 @@ exports.getAllProducts = async (req, res) => {
     const [rows] = await db.query("SELECT * FROM products");
     res.json(rows);
   } catch (err) {
-    console.error("DB Error:", err.messsage);
-    res.status(500).json({ error: "Database Error!" });
+    console.error("DB Error:", err);
+    res.status(500).json({ error: "Database Error!", details: err.messsage });
   }
 };
