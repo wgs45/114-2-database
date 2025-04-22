@@ -1,25 +1,16 @@
-import { useEffect, useState } from "react";
-import { getProducts } from "./services/api";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.css";
+import Home from "./pages/Home";
+import ProductDetail from "./pages/ProductDetail";
 
 function App() {
-  const [products, setProducts] = useState([]);
-
-  useEffect(() => {
-    getProducts().then((res) => setProducts(res.data));
-  }, []);
-
   return (
-    <div>
-      <h1>Product list</h1>
-      {products.map((p) => (
-        <div key={p.id}>
-          <h2>{p.name}</h2>
-          <p>{p.description}</p>
-          <span>${p.price}</span>
-        </div>
-      ))}
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/products/:id" element={<ProductDetail />} />
+      </Routes>
+    </Router>
   );
 }
 
