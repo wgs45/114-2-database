@@ -4,39 +4,47 @@ import axios from "axios";
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
-  const token = localStorage.getItem("token");
+  const [user, setUser] = useState(() => {
+    const storedUser = localStorage.getItem("user");
+    return storedUser ? JSON.parse(storedUser) : null;
+  });
+  const [token, setToken] = useState(() => localStorage.getItem("token"));
 
   const fetchUserProfile = async () => {
     if (!token) return;
 
     try {
-      const res = await axios.get("http://localhost:3001/api/user/profile", {
+      const res = await axios.get("http://localhost:3001/api/users/profile", {
         headers: { Authorization: `Bearer ${token}` },
       });
       setUser(res.data);
-    } catch {
-      setUser(null);
+      localStorage.setItem("user", JSON.stringify(res.data));
+    } catch (err) {
+      console.error("Profile fetch failed:", err);
+      logout(); // If invalid token, force logout
     }
   };
 
   useEffect(() => {
     fetchUserProfile();
-  }, []);
+  }, [token]);
 
   const login = (token, user) => {
-    localStorage.setItem("token", token);
+    setToken(token);
     setUser(user);
+    localStorage.setItem("token", token);
+    localStorage.setItem("user", JSON.stringify(user));
   };
 
   const logout = () => {
-    localStorage.removeItem("token");
+    setToken(null);
     setUser(null);
-    // return null;
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, token, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
