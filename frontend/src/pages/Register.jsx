@@ -45,7 +45,7 @@ function Register() {
   return (
     <Container maxWidth="sm">
       <Typography variant="h4" gutterBottom>
-        Register
+        Sign up
       </Typography>
       <Box component="form" onSubmit={handleSubmit}>
         <TextField

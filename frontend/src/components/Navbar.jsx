@@ -27,26 +27,32 @@ function Navbar() {
   return (
     <AppBar position="static" color="primary" elevation={3}>
       <Toolbar sx={{ justifyContent: "space-between" }}>
+        {/* Left: Logo */}
         <Typography
           variant="h6"
           component={Link}
           to="/"
           color="inherit"
-          sx={{ textDecoration: "none" }}
+          sx={{ textDecoration: "none", fontWeight: "bold" }}
         >
           Online Ordering System
         </Typography>
 
-        {/* Left: Home */}
-        <Typography
-          variant="h6"
-          component={Link}
-          to="/"
-          color="inherit"
-          sx={{ textDecoration: "none" }}
-        >
-          Home
-        </Typography>
+        {/* Middle: Nav Links */}
+        <Box sx={{ display: "flex", gap: 2 }}>
+          <Button color="inherit" component={Link} to="/">
+            Home
+          </Button>
+          <Button color="inherit" component={Link} to="/products">
+            Products
+          </Button>
+          <Button color="inherit" component={Link} to="/cart">
+            Cart
+          </Button>
+          <Button color="inherit" component={Link} to="/contact">
+            Contact
+          </Button>
+        </Box>
 
         {/* Right: Auth Options */}
         <Box>
@@ -84,10 +90,10 @@ function Navbar() {
           ) : (
             <>
               <Button color="inherit" component={Link} to="/login">
-                Login
+                Sign in
               </Button>
               <Button color="inherit" component={Link} to="/register">
-                Register
+                Sign up
               </Button>
             </>
           )}

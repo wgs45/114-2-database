@@ -34,7 +34,7 @@ function Login() {
   return (
     <Container maxWidth="sm">
       <Typography variant="h4" gutterBottom>
-        Login
+        Sign in
       </Typography>
       <Box component="form" onSubmit={handleSubmit}>
         <TextField
