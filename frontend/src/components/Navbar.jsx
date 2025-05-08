@@ -15,7 +15,7 @@ function Navbar() {
         {user ? (
           <>
             <Button color="inherit" component={Link} to="/dashboard">
-              Dashboard
+              Dashboard ({user.role})
             </Button>
             <Button color="inherit" onClick={logout}>
               Logout

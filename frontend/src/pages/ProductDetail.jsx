@@ -21,7 +21,7 @@ const ProductDetail = () => {
       <Typography variant="h4">{product.name}</Typography>
       <Typography>{product.description}</Typography>
       <Typography variant="h6">${product.price}</Typography>
-      <Button vairant="Contained" sx={{ mt: 2 }}>
+      <Button variant="Contained" sx={{ mt: 2 }}>
         Add to Cart
       </Button>
     </Container>
