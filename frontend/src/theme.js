@@ -16,7 +16,7 @@ export const darkTheme = createTheme({
     },
   },
   typography: {
-    fontFamily: `"inter", "SF Pro Display", sans-serif`,
+    fontFamily: `"Inter", "SF Pro Display", sans-serif`,
     button: {
       textTransform: "none",
       fontWeight: 500,
@@ -31,4 +31,31 @@ export const darkTheme = createTheme({
     "0px 4px 8px rgba(255,255,255,0.08)",
     ...Array(23).fill("none"), // Override default shadows
   ],
+});
+
+export const lightTheme = createTheme({
+  palette: {
+    mode: "light",
+    primary: {
+      main: "#0d0d0d",
+    },
+    background: {
+      default: "#f5ff5f5",
+      paper: "#ffffff",
+    },
+    text: {
+      primary: "#000000",
+      secondary: "#555555",
+    },
+  },
+  typography: {
+    fontFamily: `"Inter", "SF Pro Display", sans-serif`,
+    button: {
+      textTransform: "none",
+      fontWeight: 500,
+    },
+  },
+  shape: {
+    borderRadius: 10,
+  },
 });

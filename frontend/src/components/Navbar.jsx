@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
+import { ColorModeContext } from "../context/ThemeContext";
 import {
   AppBar,
   Toolbar,
@@ -31,14 +32,14 @@ function Navbar() {
   const [scrolled, setScrolled] = useState(false);
 
   const theme = useTheme();
+  const { toggleColorMode } = useContext(ColorModeContext);
+  const isDark = theme.palette.mode === "dark";
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   const handleMenuOpen = (event) => setAnchorEl(event.currentTarget);
   const handleMenuClose = () => setAnchorEl(null);
 
   const toggleDrawer = () => setDrawerOpen((prev) => !prev);
-  const toggleColorMode = () =>
-    setMode((prev) => (prev === "light" ? "dark" : "light"));
 
   useEffect(() => {
     const handleScroll = () => {
@@ -114,7 +115,7 @@ function Navbar() {
               onClick={toggleColorMode}
               color="inherit"
             >
-              {mode === "dark" ? <Brightness7Icon /> : <Brightness4Icon />}
+              {isDark ? <Brightness7Icon /> : <Brightness4Icon />}
             </IconButton>
           </Box>
 
