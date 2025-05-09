@@ -14,10 +14,31 @@ const Products = () => {
 
   return (
     <Container>
-      <Typography variant="h4" sx={{ my: 4 }}>
+      <Typography
+        variant="h4"
+        sx={{
+          my: 4,
+          textAlign: "center",
+          fontWeight: "bold",
+          color: "text.primary",
+        }}
+      >
         Our Products 🍔🍕
       </Typography>
-      <Grid container spacing={2}>
+      <Grid
+        container
+        spacing={2}
+        justifyContent="center"
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          gap: 2,
+          "@media (max-width: 600px)": {
+            flexDirection: "column", // Stack products on small screens
+            alignItems: "center",
+          },
+        }}
+      >
         {products.map((product) => (
           <Grid key={product.id}>
             <ProductCard product={product} />
