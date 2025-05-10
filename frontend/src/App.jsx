@@ -8,10 +8,11 @@ import PrivateRoute from "./components/PrivateRoute";
 import Layout from "./components/Layout";
 import Products from "./pages/products";
 import Cart from "./pages/Cart";
-import Contact from "./pages/Contact";
 import { ThemeProvider, CssBaseline } from "@mui/material";
 import { darkTheme } from "./theme";
 import NotFound from "./pages/NotFound";
+import Checkout from "./pages/Checkout";
+import Confirmation from "./pages/Confirmation";
 
 function App() {
   return (
@@ -24,7 +25,8 @@ function App() {
             <Route path="/products" element={<Products />} />
             {/* <Route path="/products/:id" element={<ProductDetail />} /> */}
             <Route path="/cart" element={<Cart />} />
-            <Route path="/contact" element={<Contact />} />
+            <Route path="/checkout" element={<Checkout />} />
+            <Route path="/confirmation" element={<Confirmation />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
 

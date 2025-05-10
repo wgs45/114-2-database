@@ -28,7 +28,6 @@ function Navbar() {
   const { user, logout } = useContext(AuthContext);
   const [anchorEl, setAnchorEl] = useState(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const [mode, setMode] = useState("dark");
   const [scrolled, setScrolled] = useState(false);
 
   const theme = useTheme();
@@ -61,7 +60,7 @@ function Navbar() {
     { text: "Home", to: "/" },
     { text: "Products", to: "/products" },
     { text: "Cart", to: "/cart " },
-    { text: "Contact", to: "/contact" },
+    /*     { text: "Contact", to: "/contact" }, */
   ];
 
   const authLinks = user

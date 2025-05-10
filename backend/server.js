@@ -13,5 +13,8 @@ app.use("uploads", express.static("uploads"));
 const userRoutes = require("./routes/userRoutes");
 app.use("/api/users", userRoutes);
 
+const orderRoutes = require("./routes/orderRoutes");
+app.use("/api/orders", orderRoutes);
+
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { CartContext } from "../context/CartContext";
 import { Container, Typography, Button, List, ListItem } from "@mui/material";
+import { Link } from "react-router-dom";
 
 const Cart = () => {
   const { cartItems, removeFromCart } = useContext(CartContext);
@@ -24,6 +25,9 @@ const Cart = () => {
         ))}
       </List>
       <Typography variant="h6">Total: ${total}</Typography>
+      <Button component={Link} to="/checkout" variant="contained">
+        Checkout
+      </Button>
     </Container>
   );
 };
