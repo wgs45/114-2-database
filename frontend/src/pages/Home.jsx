@@ -1,112 +1,227 @@
 import React from "react";
-import { Container, Grid, Typography, Button, Box } from "@mui/material";
+import {
+  Container,
+  Grid,
+  Typography,
+  Button,
+  Box,
+  useTheme,
+} from "@mui/material";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 import Burger from "../assets/images/burger.jpg";
 import Pizza from "../assets/images/pizza.jpg";
+import Banner from "../assets/images/banner.jpg";
+
+const fadeIn = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.8 } },
+};
 
 const Home = () => {
+  const theme = useTheme();
+
   return (
-    <Box sx={{ backgroundColor: "background.default", py: 6 }}>
-      <Container>
+    <Box
+      sx={{
+        backgroundColor: theme.palette.background.default,
+        minHeight: "100vh",
+        py: { xs: 6, md: 10 },
+        color: "white",
+      }}
+    >
+      <Container maxWidth="lg">
         {/* Hero Section */}
-        <Grid container spacing={6} alignItems="center">
+        <Grid
+          container
+          spacing={6}
+          alignItems="center"
+          justifyContent="space-between"
+        >
           <Grid>
-            <Typography
-              variant="h3"
-              sx={{ fontWeight: "bold", color: "text.primary" }}
-            >
-              Welcome to Our Premium Online Ordering System
-            </Typography>
-            <Typography variant="h6" sx={{ mt: 2, color: "text.secondary" }}>
-              Explore a wide range of delicious products, all ready to be
-              delivered to your door. Easy, fast, and secure.
-            </Typography>
-            <Button
-              component={Link}
-              to="/products"
-              variant="contained"
-              sx={{
-                mt: 3,
-                px: 3,
-                py: 1.5,
-                backgroundColor: "primary.main",
-                "&:hover": {
-                  backgroundColor: "primary.dark",
-                },
-              }}
-            >
-              Browse Products
-            </Button>
+            <motion.div initial="hidden" animate="visible" variants={fadeIn}>
+              <Typography
+                variant="h2"
+                sx={{
+                  fontWeight: 700,
+                  mb: 3,
+                  color: "text.primary",
+                }}
+              >
+                Experience Luxury Food Ordering
+              </Typography>
+              <Typography
+                variant="h6"
+                sx={{
+                  mb: 4,
+                  color: "text.secondary",
+                  maxWidth: 480,
+                }}
+              >
+                Discover gourmet meals from top-rated chefs delivered fast.
+                Elevate your taste.
+              </Typography>
+              <Button
+                component={Link}
+                to="/products"
+                variant="contained"
+                size="large"
+                sx={{
+                  background: "linear-gradient(135deg, #5A45FF, #874FFF)",
+                  px: 4,
+                  py: 1.5,
+                  fontWeight: 600,
+                  borderRadius: "12px",
+                  boxShadow: "0 4px 20px rgba(90,69,255,0.4)",
+                }}
+              >
+                Browse Menu
+              </Button>
+            </motion.div>
           </Grid>
 
-          {/* Right side: Image */}
           <Grid>
-            <Box
-              component="img"
-              src={Burger}
-              alt="Delicious food"
-              sx={{
-                width: "100%",
-                borderRadius: "12px",
-                boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
-              }}
-            />
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 0.6 }}
+            >
+              <Box
+                component="img"
+                src={Banner}
+                alt="Banner image"
+                sx={{
+                  width: "100%",
+                  borderRadius: "20px",
+                  boxShadow: "0 10px 40px rgba(0,0,0,0.5)",
+                }}
+              />
+            </motion.div>
           </Grid>
         </Grid>
 
-        {/* Featured Products Section */}
-        <Box sx={{ my: 6 }}>
+        {/* Featured Section */}
+        <Box sx={{ mt: 12 }}>
           <Typography
             variant="h4"
-            sx={{ textAlign: "center", fontWeight: "bold" }}
+            align="center"
+            fontWeight="bold"
+            gutterBottom
           >
-            Featured Products
+            🍕 Featured Dishes 🍔
           </Typography>
-          <Grid container spacing={4} sx={{ mt: 4 }} justifyContent="center">
-            {/* Render product cards here */}
+          <Typography align="center" sx={{ color: "text.secondary", mb: 6 }}>
+            Carefully curated meals to impress your palate.
+          </Typography>
+
+          <Grid container spacing={4} justifyContent="center">
+            {/* Food Card */}
             <Grid>
-              {/* Sample Product Card (add your ProductCard component here) */}
-              <Box
-                sx={{
-                  borderRadius: "12px",
-                  boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
-                }}
+              <motion.div
+                whileHover={{ scale: 1.03 }}
+                transition={{ type: "spring", stiffness: 200 }}
               >
-                <img
-                  src={Pizza}
-                  alt="Product"
-                  style={{
-                    width: "100%",
-                    height: "200px",
-                    objectFit: "cover",
-                    borderRadius: "12px 12px 0 0",
-                  }}
-                />
-                <Typography variant="h6" sx={{ padding: 2 }}>
-                  Tasty Pizza
-                </Typography>
-                <Typography sx={{ px: 2, color: "text.secondary" }}>
-                  A delicious, pizza with fresh ingredients.
-                </Typography>
-                <Typography sx={{ px: 2, fontWeight: "bold" }}>
-                  $12.99
-                </Typography>
-                <Button
-                  variant="contained"
+                <Box
                   sx={{
-                    width: "100%",
-                    borderRadius: "0 0 12px 12px",
-                    backgroundColor: "primary.main",
-                    "&:hover": {
-                      backgroundColor: "primary.dark",
-                    },
+                    borderRadius: "16px",
+                    overflow: "hidden",
+                    backdropFilter: "blur(8px)",
+                    background: "rgba(255, 255, 255, 0.05)",
+                    border: "1px solid rgba(255, 255, 255, 0.1)",
+                    boxShadow: "0 8px 30px rgba(0,0,0,0.3)",
+                    color: "white",
                   }}
                 >
-                  Add to Cart
-                </Button>
-              </Box>
+                  <img
+                    src={Pizza}
+                    alt="Pizza"
+                    style={{
+                      width: "100%",
+                      height: "200px",
+                      objectFit: "cover",
+                    }}
+                  />
+                  <Box sx={{ p: 3 }}>
+                    <Typography variant="h6" fontWeight="bold">
+                      Tasty Pizza
+                    </Typography>
+                    <Typography sx={{ my: 1, color: "text.secondary" }}>
+                      Freshly baked with the finest ingredients.
+                    </Typography>
+                    <Typography fontWeight="bold" sx={{ mb: 2 }}>
+                      $12.99
+                    </Typography>
+                    <Button
+                      to="/products"
+                      component={Link}
+                      variant="contained"
+                      fullWidth
+                      sx={{
+                        background: "linear-gradient(135deg, #5A45FF, #874FFF)",
+                        fontWeight: 600,
+                        borderRadius: "8px",
+                      }}
+                    >
+                      Browse product
+                    </Button>
+                  </Box>
+                </Box>
+              </motion.div>
             </Grid>
-            {/* Add more product cards as needed */}
+
+            {/* Food Card */}
+            <Grid>
+              <motion.div
+                whileHover={{ scale: 1.03 }}
+                transition={{ type: "spring", stiffness: 200 }}
+              >
+                <Box
+                  sx={{
+                    borderRadius: "16px",
+                    overflow: "hidden",
+                    backdropFilter: "blur(8px)",
+                    background: "rgba(255, 255, 255, 0.05)",
+                    border: "1px solid rgba(255, 255, 255, 0.1)",
+                    boxShadow: "0 8px 30px rgba(0,0,0,0.3)",
+                    color: "white",
+                  }}
+                >
+                  <img
+                    src={Burger}
+                    alt="Burger"
+                    style={{
+                      width: "100%",
+                      height: "200px",
+                      objectFit: "cover",
+                    }}
+                  />
+                  <Box sx={{ p: 3 }}>
+                    <Typography variant="h6" fontWeight="bold">
+                      Juciy Burger
+                    </Typography>
+                    <Typography sx={{ my: 1, color: "text.secondary" }}>
+                      Freshly cooked
+                    </Typography>
+                    <Typography fontWeight="bold" sx={{ mb: 2 }}>
+                      $12.99
+                    </Typography>
+                    <Button
+                      to="/products"
+                      component={Link}
+                      variant="contained"
+                      fullWidth
+                      sx={{
+                        background: "linear-gradient(135deg, #5A45FF, #874FFF)",
+                        fontWeight: 600,
+                        borderRadius: "8px",
+                      }}
+                    >
+                      Browse product
+                    </Button>
+                  </Box>
+                </Box>
+              </motion.div>
+            </Grid>
           </Grid>
         </Box>
       </Container>

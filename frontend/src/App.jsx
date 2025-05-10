@@ -1,7 +1,8 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 import Home from "./pages/Home";
-// import ProductDetail from "./pages/ProductDetail";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import PrivateRoute from "./components/PrivateRoute";
@@ -13,6 +14,8 @@ import { darkTheme } from "./theme";
 import NotFound from "./pages/NotFound";
 import Checkout from "./pages/Checkout";
 import Confirmation from "./pages/Confirmation";
+import OrderHistory from "./pages/OrderHistory";
+import AdminPanel from "./pages/AdminPanel";
 
 function App() {
   return (
@@ -31,6 +34,24 @@ function App() {
             <Route path="/register" element={<Register />} />
 
             <Route
+              path="/admin"
+              element={
+                <PrivateRoute>
+                  <AdminPanel />
+                </PrivateRoute>
+              }
+            />
+
+            <Route
+              path="/orders"
+              element={
+                <PrivateRoute>
+                  <OrderHistory />
+                </PrivateRoute>
+              }
+            />
+
+            <Route
               path="/dashboard"
               element={
                 <PrivateRoute>
@@ -41,6 +62,7 @@ function App() {
 
             <Route path="*" element={<NotFound />} />
           </Routes>
+          <ToastContainer position="top-right" />
         </Layout>
       </ThemeProvider>
     </Router>

@@ -16,3 +16,10 @@ module.exports = function (req, res, next) {
     return res.status(401).json({ message: "Invalid token" });
   }
 };
+
+const requireAdmin = (req, res, next) => {
+  if (!req.user?.is_admin) return res.status(401).json({ error: "Forbidden" });
+  next();
+};
+
+module.exports = { requireAdmin };

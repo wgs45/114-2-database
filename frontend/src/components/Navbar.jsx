@@ -60,6 +60,7 @@ function Navbar() {
     { text: "Home", to: "/" },
     { text: "Products", to: "/products" },
     { text: "Cart", to: "/cart " },
+    { text: "My Orders", to: "/orders" },
     /*     { text: "Contact", to: "/contact" }, */
   ];
 
