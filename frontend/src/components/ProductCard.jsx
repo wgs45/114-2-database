@@ -1,3 +1,4 @@
+import { useContext } from "react";
 import {
   Card,
   CardContent,
@@ -6,9 +7,11 @@ import {
   Button,
   Box,
 } from "@mui/material";
-import { Link } from "react-router-dom";
+import { CartContext } from "../context/CartContext";
 
 const ProductCard = ({ product }) => {
+  const { addToCart } = useContext(CartContext);
+
   return (
     <Card
       sx={{
@@ -56,14 +59,11 @@ const ProductCard = ({ product }) => {
         </Typography>
         <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 2 }}>
           <Button
-            component={Link}
-            to={`/products/${product.id}`}
+            onClick={() => addToCart(product)}
             variant="contained"
-            sx={{
-              "&:hover": { backgroundColor: "primary.dark" },
-            }}
+            color="primary"
           >
-            View
+            Add to Cart
           </Button>
         </Box>
       </CardContent>
