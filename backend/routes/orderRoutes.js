@@ -1,12 +1,14 @@
 const express = require("express");
 const router = express.Router();
-const connection = require("../server");
-const { requireAuth } = require("../middleware/authMiddleware");
+const connection = require("../db/index"); // Import the pool connection
+const { requireAuth } = require("../middleware/authMiddleware"); // ⚠️ Don't forget this or you'll get "req.user is undefined" again
 
 // POST /api/orders
 router.post("/", requireAuth, async (req, res) => {
+  console.log("User info from token: ", req.user);
+
   const { customer_name, items, total } = req.body;
-  const user_id = req.user.id; // retrieved from token
+  const user_id = req.user.id; // Retrieved from token
 
   console.log("Received order data: ", req.body);
 

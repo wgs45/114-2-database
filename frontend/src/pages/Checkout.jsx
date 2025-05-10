@@ -17,11 +17,21 @@ const Checkout = () => {
 
   const handleCheckout = async () => {
     try {
-      await axios.post("http://localhost:3001/api/orders", {
-        customer_name: name,
-        items: cartItems,
-        total,
-      });
+      const token = localStorage.getItem("token");
+
+      await axios.post(
+        "http://localhost:3001/api/orders",
+        {
+          customer_name: name,
+          items: cartItems,
+          total,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
       clearCart();
       navigate("/confirmation");
     } catch (err) {
