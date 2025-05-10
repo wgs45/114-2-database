@@ -5,7 +5,7 @@ const {
   loginUser,
   getUserProfile,
 } = require("../controllers/userController");
-const authenticate = require("../middleware/authMiddleware");
+const { requireAuth } = require("../middleware/authMiddleware.js");
 const { body } = require("express-validator");
 
 router.post(
@@ -27,6 +27,6 @@ router.post(
   ],
   loginUser,
 );
-router.get("/profile", authenticate, getUserProfile); // Protected route
+router.get("/profile", requireAuth, getUserProfile); // Protected route
 
 module.exports = router;

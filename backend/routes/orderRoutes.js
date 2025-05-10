@@ -1,10 +1,14 @@
 const express = require("express");
 const router = express.Router();
 const connection = require("../server");
+const { requireAuth } = require("../middleware/authMiddleware");
 
 // POST /api/orders
-router.post("/", async (req, res) => {
-  const { customer_name, items, total, user_id } = req.body;
+router.post("/", requireAuth, async (req, res) => {
+  const { customer_name, items, total } = req.body;
+  const user_id = req.user.id; // retrieved from token
+
+  console.log("Received order data: ", req.body);
 
   try {
     const [orderResult] = await connection.query(
@@ -13,24 +17,26 @@ router.post("/", async (req, res) => {
     );
 
     const orderId = orderResult.insertId;
-    res.json({ succcess: true, orderId });
+    res.json({ success: true, orderId });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Failed to place order " });
+    console.error("🔥 Database insert error!", err);
+    res.status(500).json({ error: "Failed to place order" });
   }
 });
 
-router.get("/users/:id", async (req, res) => {
+// GET /api/orders/users/:id
+router.get("/users/:id", requireAuth, async (req, res) => {
   const userId = req.params.id;
 
   try {
     const [orders] = await connection.query(
-      "SELECT * FROM orders WHERE user_id ? ORDER BY created at DESC",
+      "SELECT * FROM orders WHERE user_id = ? ORDER BY created_at DESC",
       [userId],
     );
     res.json(orders);
   } catch (err) {
-    res.status(500).json({ error: "Failed to fetch orders " });
+    console.error(err);
+    res.status(500).json({ error: "Failed to fetch orders" });
   }
 });
 

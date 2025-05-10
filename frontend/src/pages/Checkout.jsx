@@ -25,6 +25,7 @@ const Checkout = () => {
       clearCart();
       navigate("/confirmation");
     } catch (err) {
+      console.error(err);
       alert("Failed to checkout. Try again!");
     }
   };

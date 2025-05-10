@@ -18,3 +18,5 @@ router.post("/products", requireAuth, requireAdmin, async (req, res) => {
   );
   res.json({ success: true });
 });
+
+module.exports = router;

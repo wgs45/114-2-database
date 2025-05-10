@@ -8,7 +8,7 @@ app.use(express.json());
 
 const productRoutes = require("./routes/productRoutes");
 app.use("/api/products", productRoutes);
-app.use("uploads", express.static("uploads"));
+app.use("/uploads", express.static("uploads"));
 
 const userRoutes = require("./routes/userRoutes");
 app.use("/api/users", userRoutes);

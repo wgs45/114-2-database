@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 
-module.exports = function (req, res, next) {
+const requireAuth = (req, res, next) => {
   const auth = req.headers.authorization;
 
   if (!auth || !auth.startsWith("Bearer ")) {
@@ -18,8 +18,11 @@ module.exports = function (req, res, next) {
 };
 
 const requireAdmin = (req, res, next) => {
-  if (!req.user?.is_admin) return res.status(401).json({ error: "Forbidden" });
+  if (!req.user?.is_admin) return res.status(403).json({ error: "Forbidden" });
   next();
 };
 
-module.exports = { requireAdmin };
+module.exports = {
+  requireAuth,
+  requireAdmin,
+};
