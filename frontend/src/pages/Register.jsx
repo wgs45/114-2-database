@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { Container, TextField, Button, Typography, Box } from "@mui/material";
+import {
+  Container,
+  TextField,
+  Button,
+  Typography,
+  Box,
+  Paper,
+} from "@mui/material";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -9,6 +16,7 @@ function Register() {
     email: "",
     password: "",
   });
+  const [error, setError] = useState(null); // Error handling for feedback
   const navigate = useNavigate();
 
   const handleChange = (e) =>
@@ -16,20 +24,21 @@ function Register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError(null); // Clear previous Error
 
     if (!formData.name || !formData.email || !formData.password) {
-      alert("All fields are required!");
+      setError("All felds are required!");
       return;
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(formData.email)) {
-      alert("Invalid email format.");
+      setError("Invalid email format");
       return;
     }
 
     if (formData.password.length < 6) {
-      alert("Password must be at least 6 characters long.");
+      setError("Password must be at least 6 characters long");
       return;
     }
 
@@ -43,37 +52,69 @@ function Register() {
   };
 
   return (
-    <Container maxWidth="sm">
-      <Typography variant="h4" gutterBottom>
-        Sign up
-      </Typography>
-      <Box component="form" onSubmit={handleSubmit}>
-        <TextField
-          label="Name"
-          name="name"
-          fullWidth
-          margin="normal"
-          onChange={handleChange}
-        />
-        <TextField
-          label="Email"
-          name="email"
-          fullWidth
-          margin="normal"
-          onChange={handleChange}
-        />
-        <TextField
-          label="Password"
-          name="password"
-          type="password"
-          fullWidth
-          margin="normal"
-          onChange={handleChange}
-        />
-        <Button type="submit" variant="contained" color="primary">
-          Register
-        </Button>
-      </Box>
+    <Container component="main" maxWidth="xs">
+      <Paper
+        elevation={6}
+        sx={{ p: 4, borderRadius: 2, backgroundColor: "background.paper" }}
+      >
+        <Typography variant="h4" gutterBottom align="center">
+          Sign up
+        </Typography>
+        <Box component="form" onSubmit={handleSubmit}>
+          <TextField
+            label="Name"
+            name="name"
+            fullWidth
+            value={formData.name}
+            margin="normal"
+            onChange={handleChange}
+            error={!!error}
+            helperText={error && "Please fill out all fields"}
+            variant="outlined"
+          />
+          <TextField
+            label="Email"
+            name="email"
+            fullWidth
+            margin="normal"
+            value={formData.email}
+            onChange={handleChange}
+            error={!!error}
+            helperText={error && "Invalid email format"}
+            variant="outlined"
+          />
+          <TextField
+            label="Password"
+            name="password"
+            type="password"
+            fullWidth
+            margin="normal"
+            value={formData.password}
+            onChange={handleChange}
+            error={!error}
+            helperText={error && "Password must be at least 6 characters"}
+            variant="outlined"
+          />
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            sx={{ mt: 2 }}
+          >
+            Register
+          </Button>
+          {error && (
+            <Typography
+              color="error"
+              variant="body2"
+              align="center"
+              sx={{ mt: 2 }}
+            >
+              {error}
+            </Typography>
+          )}
+        </Box>
+      </Paper>
     </Container>
   );
 }

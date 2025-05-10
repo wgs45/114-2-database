@@ -10,7 +10,7 @@ const Home = () => {
       <Container>
         {/* Hero Section */}
         <Grid container spacing={6} alignItems="center">
-          <Grid item xs={12} md={6}>
+          <Grid>
             <Typography
               variant="h3"
               sx={{ fontWeight: "bold", color: "text.primary" }}
@@ -40,7 +40,7 @@ const Home = () => {
           </Grid>
 
           {/* Right side: Image */}
-          <Grid item xs={12} md={6}>
+          <Grid>
             <Box
               component="img"
               src={Burger}
@@ -64,7 +64,7 @@ const Home = () => {
           </Typography>
           <Grid container spacing={4} sx={{ mt: 4 }} justifyContent="center">
             {/* Render product cards here */}
-            <Grid item xs={12} sm={6} md={4}>
+            <Grid>
               {/* Sample Product Card (add your ProductCard component here) */}
               <Box
                 sx={{

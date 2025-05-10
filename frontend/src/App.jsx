@@ -12,6 +12,7 @@ import Cart from "./pages/Cart";
 import Contact from "./pages/Contact";
 import { ThemeProvider, CssBaseline } from "@mui/material";
 import { darkTheme } from "./theme";
+import NotFound from "./pages/NotFound";
 
 function App() {
   return (
@@ -36,6 +37,8 @@ function App() {
                 </PrivateRoute>
               }
             />
+
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </Layout>
       </ThemeProvider>
