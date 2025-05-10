@@ -5,7 +5,7 @@ const {
   loginUser,
   getUserProfile,
 } = require("../controllers/userController");
-const { requireAuth } = require("../middleware/authMiddleware.js");
+const { verifyToken } = require("../middleware/authMiddleware"); // Import verifyToken
 const { body } = require("express-validator");
 
 router.post(
@@ -19,6 +19,7 @@ router.post(
   ],
   registerUser,
 );
+
 router.post(
   "/login",
   [
@@ -27,6 +28,8 @@ router.post(
   ],
   loginUser,
 );
-router.get("/profile", requireAuth, getUserProfile); // Protected route
+
+// Protecting profile route with verifyToken middleware
+router.get("/profile", verifyToken, getUserProfile); // Protected route using verifyToken middleware
 
 module.exports = router;

@@ -8,6 +8,7 @@ export const AuthProvider = ({ children }) => {
     const storedUser = localStorage.getItem("user");
     return storedUser ? JSON.parse(storedUser) : null;
   });
+
   const [token, setToken] = useState(() => localStorage.getItem("token"));
 
   const fetchUserProfile = async () => {
@@ -26,8 +27,11 @@ export const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    fetchUserProfile();
-  }, [token]);
+    if (token) {
+      // Only fetch profile when token is present
+      fetchUserProfile();
+    }
+  }, [token]); // Add `token` as the dependency
 
   const login = (token, user) => {
     setToken(token);

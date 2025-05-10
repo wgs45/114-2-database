@@ -1,5 +1,5 @@
 const db = require("../db/index.js");
-console.log("db is: ", db);
+// console.log("db is: ", db);
 
 exports.getAllProducts = async (req, res) => {
   try {
