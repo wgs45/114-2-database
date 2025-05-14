@@ -1,47 +1,74 @@
 import { useEffect, useState } from "react";
-import { Grid, Typography, Container } from "@mui/material";
+import {
+  Grid,
+  Typography,
+  Container,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  Box,
+} from "@mui/material";
 import ProductCard from "../components/ProductCard";
 import API from "../api";
 
 const Products = () => {
+  const [restaurants, setRestaurants] = useState([]);
+  const [selectedRestaurant, setSelectedRestaurant] = useState("");
   const [products, setProducts] = useState([]);
 
+  // Fetch list of restaurants
   useEffect(() => {
-    API.get("/products")
-      .then((res) => setProducts(res.data))
-      .catch((err) => console.error("Error fetching products", err));
+    API.get("/restaurants")
+      .then((res) => setRestaurants(res.data))
+      .catch((err) => console.error("Error fetching restaurants: ", err));
   }, []);
 
+  // Fetch products depending on restaurant selection
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const endpoint = selectedRestaurant
+          ? `/products?restaurant_id=${selectedRestaurant}`
+          : "/products";
+        const res = await API.get(endpoint);
+      } catch (err) {
+        console.error("Error fetching products: ", err);
+      }
+    };
+    fetchProducts();
+  }, [selectedRestaurant]);
+
   return (
-    <Container>
-      <Typography
-        variant="h4"
-        sx={{
-          my: 4,
-          textAlign: "center",
-          fontWeight: "bold",
-          color: "text.primary",
-        }}
-      >
-        Our Products 🍔🍕
+    <Container maxWidth="lg" sx={{ py: 6 }}>
+      <Typography variant="h4" gutterBottom color="primary">
+        Choose Dishes
       </Typography>
-      <Grid
-        container
-        spacing={2}
-        justifyContent="center"
-        sx={{
-          display: "flex",
-          flexDirection: "row",
-          gap: 2,
-          "@media (max-width: 600px)": {
-            flexDirection: "column", // Stack products on small screens
-            alignItems: "center",
-          },
-        }}
-      >
+
+      <FormControl fullWidth variant="outlined" sx={{ mb: 4 }}>
+        <InputLabel id="restaurant-select-label" color="primary">
+          Filter by Restaurant
+        </InputLabel>
+        <Select
+          labelId="restaurant-select-label"
+          value={selectedRestaurant}
+          onChange={(e) => setSelectedRestaurant(e.target.value)}
+          label="Filter by Restaurant"
+          color="primary"
+        >
+          <MenuItem value="">All Restaurants</MenuItem>
+          {restaurants.map((restaurant) => (
+            <MenuItem key={restaurant.id} value={restaurant.id}>
+              {restaurant.name}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+
+      <Grid container spacing={3}>
         {products.map((product) => (
           <Grid key={product.id}>
-            <ProductCard product={product} />
+            <ProductCard product={products} />
           </Grid>
         ))}
       </Grid>

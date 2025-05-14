@@ -2,11 +2,21 @@ const db = require("../db/index.js");
 // console.log("db is: ", db);
 
 exports.getAllProducts = async (req, res) => {
+  const { restaurant_id } = req.query;
+
   try {
-    const [rows] = await db.query("SELECT * FROM products");
+    let query = "SELECT * FROM products";
+    let params = [];
+
+    if (restaurant_id) {
+      query += " WHERE restaurant_id = ?";
+      params.push(restaurant_id);
+    }
+
+    const [rows] = await db.query(query, params);
     res.json(rows);
   } catch (err) {
-    console.error("DB Error:", err);
+    console.error("DB Error: ", err);
     res.status(500).json({ error: "Database Error!", details: err.messsage });
   }
 };
