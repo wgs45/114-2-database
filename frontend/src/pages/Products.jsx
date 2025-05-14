@@ -20,7 +20,9 @@ const Products = () => {
   // Fetch list of restaurants
   useEffect(() => {
     API.get("/restaurants")
-      .then((res) => setRestaurants(res.data))
+      .then((res) => {
+        setRestaurants(res.data);
+      })
       .catch((err) => console.error("Error fetching restaurants: ", err));
   }, []);
 
@@ -32,6 +34,7 @@ const Products = () => {
           ? `/products?restaurant_id=${selectedRestaurant}`
           : "/products";
         const res = await API.get(endpoint);
+        setProducts(res.data);
       } catch (err) {
         console.error("Error fetching products: ", err);
       }
@@ -68,7 +71,7 @@ const Products = () => {
       <Grid container spacing={3}>
         {products.map((product) => (
           <Grid key={product.id}>
-            <ProductCard product={products} />
+            <ProductCard product={product} />
           </Grid>
         ))}
       </Grid>

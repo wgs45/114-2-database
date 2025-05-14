@@ -7,18 +7,22 @@ const CartProvider = ({ children }) => {
 
   const addToCart = (product) => {
     setCartItems((prev) => {
-      const item = prev.find((item) => item.id === product.id);
-      if (item) {
-        return prev.map(
-          (item) =>
-            item.id === product.id
-              ? { ...item, quantity: item.quantity + 1 }
-              : item,
-          console.log("Add item: ", item),
-        );
-      } else {
-        return [...prev, { ...product, quantity: 1 }];
+      if (prev.length > 0 && prev[0].restaurant_id !== product.restaurant_id) {
+        alert("You can only order from one restaurant at a time!");
+        return prev;
       }
+
+      const existingItem = prev.find((item) => item.id === product.id);
+
+      if (existingItem) {
+        return prev.map((item) =>
+          item.id === product.id
+            ? { ...item, quantity: item.quantity + 1 }
+            : item,
+        );
+      }
+
+      return [...prev, { ...product, quantity: 1 }];
     });
   };
 
