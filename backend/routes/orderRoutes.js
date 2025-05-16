@@ -5,52 +5,61 @@ const { requireAuth } = require("../middleware/authMiddleware"); // ⚠️ Don't
 
 // POST /api/orders
 router.post("/", requireAuth, async (req, res) => {
-  console.log("User info from token: ", req.user);
+  const {
+    customer_name,
+    items,
+    total,
+    restaurant_id,
+    address,
+    payment_method,
+  } = req.body;
+  const user_id = req.user.id;
 
-  const { customer_name, items, total, restaurant_id } = req.body;
-  const user_id = req.user.id; // Retrieved from token
-
-  console.log("Received order data: ", req.body);
-
-  // Ensure rquired fields are provided
   if (
     !customer_name ||
     !items ||
     !Array.isArray(items) ||
     items.length === 0 ||
-    !total
+    !total ||
+    !restaurant_id ||
+    !address ||
+    !payment_method
   ) {
     return res.status(400).json({ error: "Missing or invalid order data" });
   }
 
-  const conn = await connection.getConnection(); // Get connection for transactions
+  const conn = await connection.getConnection();
 
   try {
-    await conn.beginTransaction(); // Start transaction
+    await conn.beginTransaction();
 
+    // Insert the order with all required info
     const [orderResult] = await conn.query(
-      "INSERT INTO orders (customer_name, total, user_id, status) VALUES (?, ?, ?, 'pending')",
-      [customer_name, total, user_id],
+      `INSERT INTO orders 
+        (customer_name, address, payment_method, total, user_id, restaurant_id, status) 
+       VALUES (?, ?, ?, ?, ?, ?, 'pending')`,
+      [customer_name, address, payment_method, total, user_id, restaurant_id],
     );
 
-    const orderId = orderResult.insertId;
+    const order_id = orderResult.insertId;
 
+    // Insert each order item linked to the order_id
     for (const item of items) {
       const { product_id, quantity } = item;
       if (!product_id || !quantity) continue;
 
       await conn.query(
-        "INSERT INTO orders (customer_name, total, user_id, restaurant_id, status) VALUES (?, ?, ?, ?, 'pending')",
-        [customer_name, total, user_id, restaurant_id],
+        "INSERT INTO order_items (order_id, product_id, quantity) VALUES (?, ?, ?)",
+        [order_id, product_id, quantity],
       );
     }
 
-    await conn.commit(); // Commit transaction
-    conn.release(); // Release connection back to pool
+    await conn.commit();
+    conn.release();
 
-    res.status(201).json({ success: true, message: "Order placed", orderId });
+    res.status(201).json({ success: true, message: "Order placed", order_id });
   } catch (err) {
-    await conn.rollback(); // Rollback transaction on error
+    await conn.rollback();
     conn.release();
 
     console.error("🔥 Database insert error!", err);

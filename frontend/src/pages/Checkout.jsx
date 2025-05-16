@@ -22,21 +22,26 @@ const Checkout = () => {
   const [address, setAddress] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("");
   const [error, setError] = useState("");
+  const [checkoutInProgress, setCheckoutInProgress] = useState(false);
 
   // Check if cart is empty
   useEffect(() => {
-    if (cartItems.length === 0) {
+    if (cartItems.length === 0 && !checkoutInProgress) {
+      console.log("Cart items updated: ", cartItems);
       alert("Your cart is empty, please add at least one item!");
       navigate("/products");
     }
-  }, [cartItems, navigate]);
+  }, [cartItems, navigate, checkoutInProgress]);
 
   const total = cartItems
     .reduce((sum, item) => sum + item.price * item.quantity, 0)
     .toFixed(2);
 
   const handleCheckout = async () => {
+    console.log("Cart items as checkout: ", cartItems);
+
     setError(""); // Reset error
+    setCheckoutInProgress(true); // Protects against empty cart redirect
 
     // Check for required fields
     if (!name || !address || !paymentMethod) {
@@ -45,9 +50,9 @@ const Checkout = () => {
     }
 
     // Check if all items are from the same restaurant
-    const restaurantId = cartItems[0]?.restaurantId;
+    const restaurant_id = cartItems[0]?.restaurant_id;
     const allSameRestaurant = cartItems.every(
-      (item) => item.restaurantId === restaurantId,
+      (item) => item.restaurant_id === restaurant_id,
     );
 
     if (!allSameRestaurant) {
@@ -69,8 +74,12 @@ const Checkout = () => {
         customer_name: name,
         address,
         payment_method: paymentMethod,
-        restaurant_id: restaurantId,
+        restaurant_id: restaurant_id,
         total,
+        items: cartItems.map((item) => ({
+          product_id: item.id,
+          quantity: item.quantity,
+        })),
       };
 
       await axios.post("http://localhost:3001/api/orders", orderData, {
@@ -79,11 +88,14 @@ const Checkout = () => {
         },
       });
 
+      console.log("Cart items as checkout: ", cartItems);
       clearCart();
+
       navigate("/confirmation");
     } catch (err) {
       console.error(err);
       setError("Failed to place order. Please try again!");
+      setCheckoutInProgress(false); // On failure, allow cart check again
     }
   };
 

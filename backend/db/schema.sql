@@ -1,10 +1,10 @@
 -- Create user table
-CREATE TABLE users (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100),
-    email VARCHAR(100) UNIQUE,
-    password VARCHAR(255)
-);
+-- CREATE TABLE users (
+--     id INT AUTO_INCREMENT PRIMARY KEY,
+--     name VARCHAR(100),
+--     email VARCHAR(100) UNIQUE,
+--     password VARCHAR(255)
+-- );
 
 
 -- Create restaurants table
@@ -30,6 +30,8 @@ CREATE TABLE products (
 CREATE TABLE orders (
   id INT AUTO_INCREMENT PRIMARY KEY,
   customer_name VARCHAR(100) NOT NULL,
+  address VARCHAR(255) NOT NULL,
+  payment_method VARCHAR(255) NOT NULL,
   total DECIMAL(10, 2) NOT NULL,
   status ENUM('pending', 'preparing', 'completed', 'cancelled') DEFAULT 'pending',
   user_id INT NOT NULL,
