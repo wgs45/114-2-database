@@ -55,7 +55,7 @@ const ProductCard = ({ product }) => {
           variant="subtitle1"
           sx={{ fontWeight: "bold", color: "primary.main" }}
         >
-          ${product.price}
+          NT ${product.price}
         </Typography>
         <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 2 }}>
           <Button

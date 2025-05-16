@@ -7,20 +7,52 @@ const { requireAuth } = require("../middleware/authMiddleware"); // ⚠️ Don't
 router.post("/", requireAuth, async (req, res) => {
   console.log("User info from token: ", req.user);
 
-  const { customer_name, items, total } = req.body;
+  const { customer_name, items, total, restaurant_id } = req.body;
   const user_id = req.user.id; // Retrieved from token
 
   console.log("Received order data: ", req.body);
 
+  // Ensure rquired fields are provided
+  if (
+    !customer_name ||
+    !items ||
+    !Array.isArray(items) ||
+    items.length === 0 ||
+    !total
+  ) {
+    return res.status(400).json({ error: "Missing or invalid order data" });
+  }
+
+  const conn = await connection.getConnection(); // Get connection for transactions
+
   try {
-    const [orderResult] = await connection.query(
-      "INSERT INTO orders (customer_name, total, user_id) VALUES (?, ?, ?)",
+    await conn.beginTransaction(); // Start transaction
+
+    const [orderResult] = await conn.query(
+      "INSERT INTO orders (customer_name, total, user_id, status) VALUES (?, ?, ?, 'pending')",
       [customer_name, total, user_id],
     );
 
     const orderId = orderResult.insertId;
-    res.json({ success: true, orderId });
+
+    for (const item of items) {
+      const { product_id, quantity } = item;
+      if (!product_id || !quantity) continue;
+
+      await conn.query(
+        "INSERT INTO orders (customer_name, total, user_id, restaurant_id, status) VALUES (?, ?, ?, ?, 'pending')",
+        [customer_name, total, user_id, restaurant_id],
+      );
+    }
+
+    await conn.commit(); // Commit transaction
+    conn.release(); // Release connection back to pool
+
+    res.status(201).json({ success: true, message: "Order placed", orderId });
   } catch (err) {
+    await conn.rollback(); // Rollback transaction on error
+    conn.release();
+
     console.error("🔥 Database insert error!", err);
     res.status(500).json({ error: "Failed to place order" });
   }
@@ -32,7 +64,13 @@ router.get("/users/:id", requireAuth, async (req, res) => {
 
   try {
     const [orders] = await connection.query(
-      "SELECT * FROM orders WHERE user_id = ? ORDER BY created_at DESC",
+      `
+      SELECT o.*, r.name AS restaurant_name
+      FROM orders o
+      LEFT JOIN restaurants r ON o.restaurant_id = r.id
+      WHERE o.user_id = ?
+      ORDER BY o.created_at DESC
+      `,
       [userId],
     );
     res.json(orders);

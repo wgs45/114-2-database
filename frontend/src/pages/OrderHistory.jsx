@@ -1,7 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
-import { Container, Typography, List, ListItem, Divider } from "@mui/material";
+import {
+  Container,
+  Typography,
+  List,
+  ListItem,
+  Divider,
+  Box,
+} from "@mui/material";
 
 const OrderHistory = () => {
   const { user, token } = useContext(AuthContext);
@@ -47,14 +54,38 @@ const OrderHistory = () => {
         <List>
           {orders.map((order) => (
             <React.Fragment key={order.id}>
-              <ListItem>
-                <Typography>
-                  <strong>{order.customer_name}</strong> | Total: $
-                  {Number(order.total).toFixed(2)} | Placed at:{" "}
-                  {order.created_at
-                    ? new Date(order.created_at).toLocaleString()
-                    : "N/A"}
-                </Typography>
+              <ListItem alignItems="flex-start">
+                <Box>
+                  <Typography variant="h6">Order #{order.id}</Typography>
+                  <Typography variant="body1">
+                    Name: <strong>{order.customer_name || order.name}</strong>
+                  </Typography>
+
+                  {order.address && (
+                    <Typography variant="body1">
+                      Address: {order.address}
+                    </Typography>
+                  )}
+
+                  {order.payment_method && (
+                    <Typography variant="body1">
+                      Payment: {order.payment_method}
+                    </Typography>
+                  )}
+
+                  {order.restaurant_name && (
+                    <Typography variant="body1">
+                      Restaurant: {order.restaurant_name}
+                    </Typography>
+                  )}
+
+                  <Typography variant="body2" color="text.secondary">
+                    Placed at:{" "}
+                    {order.created_at
+                      ? new Date(order.created_at).toLocaleString()
+                      : "N/A"}
+                  </Typography>
+                </Box>
               </ListItem>
               <Divider />
             </React.Fragment>
