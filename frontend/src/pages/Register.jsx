@@ -26,7 +26,9 @@ function Register() {
     e.preventDefault();
     setError(null); // Clear previous Error
 
-    if (!formData.name || !formData.email || !formData.password) {
+    const { name, email, password } = formData;
+
+    if (!name || !email || !password) {
       setError("All felds are required!");
       return;
     }
@@ -55,7 +57,16 @@ function Register() {
     <Container component="main" maxWidth="xs">
       <Paper
         elevation={6}
-        sx={{ p: 4, borderRadius: 2, backgroundColor: "background.paper" }}
+        sx={{
+          p: 4,
+          borderRadius: 2,
+          backgroundColor: "background.paper",
+          transition: "transform 0.4s ease-in-out, box-shadow 0.4s ease-in-out",
+          "&:hover": {
+            transform: "scale(1.02)",
+            boxShadow: "0 10px 30px rgba(255, 255, 255, 0.1)",
+          },
+        }}
       >
         <Typography variant="h4" gutterBottom align="center">
           Sign up
@@ -68,9 +79,12 @@ function Register() {
             value={formData.name}
             margin="normal"
             onChange={handleChange}
-            error={!!error}
-            helperText={error && "Please fill out all fields"}
+            error={error?.includes("required")}
+            helperText={
+              error?.includes("required") && "Please fill out all fields"
+            }
             variant="outlined"
+            sx={inputStyle}
           />
           <TextField
             label="Email"
@@ -79,9 +93,10 @@ function Register() {
             margin="normal"
             value={formData.email}
             onChange={handleChange}
-            error={!!error}
-            helperText={error && "Invalid email format"}
+            error={error?.includes("email")}
+            helperText={error?.includes("email") && "Invalid email format"}
             variant="outlined"
+            sx={inputStyle}
           />
           <TextField
             label="Password"
@@ -91,15 +106,31 @@ function Register() {
             margin="normal"
             value={formData.password}
             onChange={handleChange}
-            error={!error}
-            helperText={error && "Password must be at least 6 characters"}
+            error={error?.includes("Password")}
+            helperText={
+              error?.includes("Password") &&
+              "Password must be at least 6 characters"
+            }
             variant="outlined"
           />
           <Button
             type="submit"
             variant="contained"
             color="primary"
-            sx={{ mt: 2 }}
+            sx={{
+              mt: 2,
+              backgroundColor: "#fff",
+              color: "#222",
+              fontWeight: 600,
+              borderRadius: "10px",
+              transition:
+                "transform 0.4s ease-in-out, box-shadow 0.4s ease-in-out",
+              "&:hover": {
+                transform: "scale(1.05)",
+                backgroundColor: "#f0f0f0",
+                boxShadow: "0 6px 20px rgba(255, 255, 255, 0.2)",
+              },
+            }}
           >
             Register
           </Button>
@@ -118,5 +149,22 @@ function Register() {
     </Container>
   );
 }
+
+const inputStyle = {
+  input: { color: "text.primary" },
+  "& .MuiOutlinedInput-root": {
+    borderRadius: "10px",
+    backgroundColor: "rgba(255, 255, 255, 0.04)",
+    "& fieldset": {
+      borderColor: "rgba(255,255,255,0.1)",
+    },
+    "&:hover fieldset": {
+      borderColor: "rgba(255,255,255,0.3)",
+    },
+    "&.Mui-focused fieldset": {
+      borderColor: "primary.main",
+    },
+  },
+};
 
 export default Register;

@@ -27,7 +27,7 @@ const Confirmation = () => {
       </Typography>
       <Button
         component={Link}
-        to="/products"
+        to="/orders"
         variant="contained"
         size="large"
         sx={{
@@ -39,7 +39,7 @@ const Confirmation = () => {
           },
         }}
       >
-        Back to Product
+        Check your orders
       </Button>
     </Container>
   );

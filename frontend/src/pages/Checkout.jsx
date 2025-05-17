@@ -154,8 +154,8 @@ const Checkout = () => {
         required
       >
         <MenuItem value="">Select a method</MenuItem>
-        <MenuItem value="credit card">Credit Card</MenuItem>
-        <MenuItem value="cash_on_delivery">Cash on Delivery</MenuItem>
+        <MenuItem value="Credit Card">Credit Card</MenuItem>
+        <MenuItem value="Cash">Cash on Delivery</MenuItem>
       </TextField>
 
       <Box mt={2}>

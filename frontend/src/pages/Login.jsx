@@ -34,7 +34,7 @@ function Login() {
       login(token, user); // Sets the user state
       localStorage.setItem("token", res.data.token);
       alert(`Welcome back, ${res.data.user.name}!`);
-      navigate("/dashboard");
+      navigate("/products");
     } catch (err) {
       alert("Login failed. Please check your credentials.");
     }
@@ -44,7 +44,16 @@ function Login() {
     <Container component="main" maxWidth="sm">
       <Paper
         elevation={6}
-        sx={{ p: 4, borderRadius: 2, backgroundColor: "background.paper" }}
+        sx={{
+          p: 4,
+          borderRadius: 3,
+          backgroundColor: "background.paper",
+          transition: "transform 0.4s ease-in-out, box-shadow 0.4s ease-in-out",
+          "&:hover": {
+            transform: "scale(1.02)",
+            boxShadow: "0 10px 30px rgba(255, 255, 255, 0.1)",
+          },
+        }}
       >
         <Typography variant="h5" gutterBottom align="center">
           Sign in
@@ -60,6 +69,22 @@ function Login() {
             error={!!error}
             helperText={error ? "Invalid email or password" : ""}
             variant="outlined"
+            sx={{
+              input: { color: "text.primary" },
+              "& .MuiOutlinedInput-root": {
+                borderRadius: "10px",
+                backgroundColor: "rgba(255, 255, 255, 0.04)",
+                "& fieldset": {
+                  borderColor: "rgba(255,255,255,0.1)",
+                },
+                "&:hover fieldset": {
+                  borderColor: "rgba(255,255,255,0.3)",
+                },
+                "&.Mui-focused fieldset": {
+                  borderColor: "primary.main",
+                },
+              },
+            }}
           />
           <TextField
             label="Password"
@@ -72,13 +97,42 @@ function Login() {
             error={!!error}
             helperText={error && "Invalid email or password"}
             variant="outlined"
+            sx={{
+              input: { color: "text.primary" },
+              "& .MuiOutlinedInput-root": {
+                borderRadius: "10px",
+                backgroundColor: "rgba(255, 255, 255, 0.04)",
+                "& fieldset": {
+                  borderColor: "rgba(255,255,255,0.1)",
+                },
+                "&:hover fieldset": {
+                  borderColor: "rgba(255,255,255,0.3)",
+                },
+                "&.Mui-focused fieldset": {
+                  borderColor: "primary.main",
+                },
+              },
+            }}
           />
           <Button
             type="submit"
             fullWidth
             variant="contained"
             color="primary"
-            sx={{ mt: 2 }}
+            sx={{
+              mt: 2,
+              backgroundColor: "#fff",
+              color: "#222",
+              fontWeight: 600,
+              borderRadius: "10px",
+              transition:
+                "transform 0.4s ease-in-out, box-shadow 0.4s ease-in-out",
+              "&:hover": {
+                transform: "scale(1.05)",
+                boxShadow: "0 6px 20px rgba(255, 255, 255, 0.2)",
+                backgroundColor: "#f0f0f0",
+              },
+            }}
           >
             Login
           </Button>
