@@ -70,7 +70,8 @@ const FoodCard = ({ image, title, description, price }) => (
               color: "#333",
               fontWeight: 600,
               borderRadius: "8px",
-              transition: "transform 0.3s ease, box-shadow 0.3s ease",
+              transition:
+                "transform 0.4s ease-in-out, box-shadow 0.4s ease-in-out",
               "&:hover": {
                 transform: "scale(1.05)",
                 boxShadow: "0 6px 20px rgba(255, 255, 255, 0.15)",
@@ -136,7 +137,8 @@ const Home = () => {
                   py: 1.5,
                   fontWeight: 600,
                   borderRadius: "12px",
-                  transition: "transform 0.3s ease, box-shadow 0.3s ease",
+                  transition:
+                    "transform 0.4s ease-in-out, box-shadow 0.4s ease-in-out",
                   boxShadow: "0 4px 20px rgba(255,255,255,0.15)",
                   "&:hover": {
                     transform: "scale(1.05)",
