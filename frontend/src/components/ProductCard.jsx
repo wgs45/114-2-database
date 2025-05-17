@@ -15,53 +15,72 @@ const ProductCard = ({ product }) => {
   return (
     <Card
       sx={{
-        maxWidth: 300,
+        maxWidth: 320,
         m: 2,
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
-        borderRadius: "12px",
-        boxShadow: 2,
-        transition: "transform 0.5s ease, box-shadow 0.5s ease",
+        borderRadius: "16px",
+        boxShadow: 3,
+        overflow: "hidden",
+        bgcolor: "Background.paper",
+
+        transition: "transform 0.4s ease-in-out, box-shadow 0.4s ease-in-out",
         "&:hover": {
-          transform: "scale(1.05)", // Slightly zoom on hover
-          boxShadow: 10, // Bigger shadow for depth
+          transform: "translateY(-5px) scale(1.03)",
+          boxShadow: 8,
         },
       }}
     >
       <CardMedia
         component="img"
-        height="100"
+        height="180"
         image={product.image_url}
         alt={product.name}
         sx={{
           objectFit: "cover", // Make sure the image covers the area nicely
-          borderRadius: "8px 8px 0 0",
+          width: "100%",
         }}
       />
-      <CardContent sx={{ flexGrpw: 1 }}>
+      <CardContent sx={{ flexGrow: 1, p: 2 }}>
         <Typography
           variant="h6"
-          sx={{ fontWeight: "bold", color: "text.primary" }}
+          sx={{
+            fontWeight: "bold",
+            color: "text.primary",
+            mb: 1,
+            lineHeight: 1.4,
+          }}
         >
           {product.name}
         </Typography>
-        <Typography variant="body2" sx={{ my: 1, color: "text.secondary" }}>
+        <Typography
+          variant="body2"
+          sx={{ my: 1, color: "text.secondary", minHeight: 40 }}
+        >
           {product.description.length > 100
             ? `${product.description.slice(0, 100)}...`
             : product.description}
         </Typography>
         <Typography
           variant="subtitle1"
-          sx={{ fontWeight: "bold", color: "primary.main" }}
+          sx={{ fontWeight: "bold", color: "primary.main", mb: 2 }}
         >
           NT ${product.price}
         </Typography>
-        <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 2 }}>
+
+        <Box sx={{ textAlign: "right" }}>
           <Button
             onClick={() => addToCart(product)}
             variant="contained"
             color="primary"
+            size="medium"
+            sx={{
+              fontWeight: 600,
+              borderRadius: "8px",
+              textTransform: "none",
+              px: 3,
+            }}
           >
             Add to Cart
           </Button>

@@ -18,8 +18,8 @@ const fadeIn = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.8 } },
 };
 
-// Food Card component
-const FoodCard = ({ image, title, description, price }) => {
+// 🧁 Food Card component
+const FoodCard = ({ image, title, description, price }) => (
   <Grid>
     <motion.div
       whileHover={{ scale: 1.03 }}
@@ -32,7 +32,7 @@ const FoodCard = ({ image, title, description, price }) => {
           backdropFilter: "blur(8px)",
           background: "rgba(255, 255, 255, 0.05)",
           border: "1px solid rgba(255, 255, 255, 0.1)",
-          boxShadow: "0 8px 30px rgba(0, 0, 0, 0.3)",
+          boxShadow: "0 8px 30px rgba(0,0,0,0.3)",
           color: "white",
         }}
       >
@@ -45,11 +45,34 @@ const FoodCard = ({ image, title, description, price }) => {
             objectFit: "cover",
           }}
         />
-        <Box sx={{ p: 3 }}></Box>
+        <Box sx={{ p: 3 }}>
+          <Typography variant="h6" fontWeight="bold">
+            {title}
+          </Typography>
+          <Typography sx={{ my: 1, color: "text.secondary" }}>
+            {description}
+          </Typography>
+          <Typography fontWeight="bold" sx={{ mb: 2 }}>
+            NT ${price}
+          </Typography>
+          <Button
+            to="/products"
+            component={Link}
+            variant="contained"
+            fullWidth
+            sx={{
+              background: "linear-gradient(135deg, #5A45FF, #874FFF)",
+              fontWeight: 600,
+              borderRadius: "8px",
+            }}
+          >
+            Browse Product
+          </Button>
+        </Box>
       </Box>
     </motion.div>
-  </Grid>;
-};
+  </Grid>
+);
 
 const Home = () => {
   const theme = useTheme();
@@ -64,17 +87,12 @@ const Home = () => {
       }}
     >
       <Container maxWidth="lg">
-        {/* Hero Section */}
-        <Grid
-          container
-          spacing={6}
-          alignItems="center"
-          justifyContent="space-between"
-        >
+        {/* 🎉 Hero Section */}
+        <Grid container spacing={6} alignItems="center">
           <Grid>
             <motion.div initial="hidden" animate="visible" variants={fadeIn}>
               <Typography
-                variant="h2"
+                variant="h3"
                 sx={{
                   fontWeight: 700,
                   mb: 3,
@@ -84,7 +102,7 @@ const Home = () => {
                 Experience Luxury Food Ordering
               </Typography>
               <Typography
-                variant="h6"
+                variant="body1"
                 sx={{
                   mb: 4,
                   color: "text.secondary",
@@ -133,8 +151,8 @@ const Home = () => {
           </Grid>
         </Grid>
 
-        {/* Featured Section */}
-        <Box sx={{ mt: 12 }}>
+        {/* 🍽️ Featured Section */}
+        <Box sx={{ mt: { xs: 10, md: 14 } }}>
           <Typography
             variant="h4"
             align="center"
@@ -148,113 +166,18 @@ const Home = () => {
           </Typography>
 
           <Grid container spacing={4} justifyContent="center">
-            {/* Food Card */}
-            <Grid>
-              <motion.div
-                whileHover={{ scale: 1.03 }}
-                transition={{ type: "spring", stiffness: 200 }}
-              >
-                <Box
-                  sx={{
-                    borderRadius: "16px",
-                    overflow: "hidden",
-                    backdropFilter: "blur(8px)",
-                    background: "rgba(255, 255, 255, 0.05)",
-                    border: "1px solid rgba(255, 255, 255, 0.1)",
-                    boxShadow: "0 8px 30px rgba(0,0,0,0.3)",
-                    color: "white",
-                  }}
-                >
-                  <img
-                    src={Pizza}
-                    alt="Pizza"
-                    style={{
-                      width: "100%",
-                      height: "200px",
-                      objectFit: "cover",
-                    }}
-                  />
-                  <Box sx={{ p: 3 }}>
-                    <Typography variant="h6" fontWeight="bold">
-                      Tasty Pizza
-                    </Typography>
-                    <Typography sx={{ my: 1, color: "text.secondary" }}>
-                      Freshly baked with the finest ingredients.
-                    </Typography>
-                    <Typography fontWeight="bold" sx={{ mb: 2 }}>
-                      NT $250.00
-                    </Typography>
-                    <Button
-                      to="/products"
-                      component={Link}
-                      variant="contained"
-                      fullWidth
-                      sx={{
-                        background: "linear-gradient(135deg, #5A45FF, #874FFF)",
-                        fontWeight: 600,
-                        borderRadius: "8px",
-                      }}
-                    >
-                      Browse product
-                    </Button>
-                  </Box>
-                </Box>
-              </motion.div>
-            </Grid>
-
-            {/* Food Card */}
-            <Grid>
-              <motion.div
-                whileHover={{ scale: 1.03 }}
-                transition={{ type: "spring", stiffness: 200 }}
-              >
-                <Box
-                  sx={{
-                    borderRadius: "16px",
-                    overflow: "hidden",
-                    backdropFilter: "blur(8px)",
-                    background: "rgba(255, 255, 255, 0.05)",
-                    border: "1px solid rgba(255, 255, 255, 0.1)",
-                    boxShadow: "0 8px 30px rgba(0,0,0,0.3)",
-                    color: "white",
-                  }}
-                >
-                  <img
-                    src={TunaRoll}
-                    alt="Tuna roll"
-                    style={{
-                      width: "100%",
-                      height: "200px",
-                      objectFit: "cover",
-                    }}
-                  />
-                  <Box sx={{ p: 3 }}>
-                    <Typography variant="h6" fontWeight="bold">
-                      Tuna Roll
-                    </Typography>
-                    <Typography sx={{ my: 1, color: "text.secondary" }}>
-                      Freshly made
-                    </Typography>
-                    <Typography fontWeight="bold" sx={{ mb: 2 }}>
-                      NT $80.00
-                    </Typography>
-                    <Button
-                      to="/products"
-                      component={Link}
-                      variant="contained"
-                      fullWidth
-                      sx={{
-                        background: "linear-gradient(135deg, #5A45FF, #874FFF)",
-                        fontWeight: 600,
-                        borderRadius: "8px",
-                      }}
-                    >
-                      Browse product
-                    </Button>
-                  </Box>
-                </Box>
-              </motion.div>
-            </Grid>
+            <FoodCard
+              image={Pizza}
+              title="Tasty Pizza"
+              description="Freshly baked with the finest ingredients."
+              price={250}
+            />
+            <FoodCard
+              image={TunaRoll}
+              title="Tuna Roll"
+              description="Freshly made with premium fish."
+              price={80}
+            />
           </Grid>
         </Box>
       </Container>

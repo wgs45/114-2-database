@@ -1,14 +1,14 @@
 // import { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+// import { ToastContainer } from "react-toastify";
+// import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import PrivateRoute from "./components/PrivateRoute";
 import Layout from "./components/Layout";
-import Products from "./pages/products";
+import Products from "./pages/Products";
 import Cart from "./pages/Cart";
 import { ThemeProvider, CssBaseline } from "@mui/material";
 import { darkTheme } from "./theme";
@@ -71,7 +71,6 @@ function App() {
 
               <Route path="*" element={<NotFound />} />
             </Routes>
-            <ToastContainer position="top-right" />
           </Layout>
         </ThemeProvider>
       </Router>

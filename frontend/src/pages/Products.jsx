@@ -7,7 +7,6 @@ import {
   InputLabel,
   Select,
   MenuItem,
-  Box,
 } from "@mui/material";
 import ProductCard from "../components/ProductCard";
 import API from "../api";
