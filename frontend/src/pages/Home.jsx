@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import Burger from "../assets/images/burger.jpg";
+import TunaRoll from "../assets/images/tuna_roll.jpg";
 import Pizza from "../assets/images/pizza.jpg";
 import Banner from "../assets/images/banner.jpg";
 
@@ -108,7 +108,7 @@ const Home = () => {
             fontWeight="bold"
             gutterBottom
           >
-            🍕 Featured Dishes 🍔
+            Featured Dishes
           </Typography>
           <Typography align="center" sx={{ color: "text.secondary", mb: 6 }}>
             Carefully curated meals to impress your palate.
@@ -149,7 +149,7 @@ const Home = () => {
                       Freshly baked with the finest ingredients.
                     </Typography>
                     <Typography fontWeight="bold" sx={{ mb: 2 }}>
-                      $12.99
+                      NT $250.00
                     </Typography>
                     <Button
                       to="/products"
@@ -187,8 +187,8 @@ const Home = () => {
                   }}
                 >
                   <img
-                    src={Burger}
-                    alt="Burger"
+                    src={TunaRoll}
+                    alt="Tuna roll"
                     style={{
                       width: "100%",
                       height: "200px",
@@ -197,13 +197,13 @@ const Home = () => {
                   />
                   <Box sx={{ p: 3 }}>
                     <Typography variant="h6" fontWeight="bold">
-                      Juciy Burger
+                      Tuna Roll
                     </Typography>
                     <Typography sx={{ my: 1, color: "text.secondary" }}>
-                      Freshly cooked
+                      Freshly made
                     </Typography>
                     <Typography fontWeight="bold" sx={{ mb: 2 }}>
-                      $12.99
+                      NT $80.00
                     </Typography>
                     <Button
                       to="/products"

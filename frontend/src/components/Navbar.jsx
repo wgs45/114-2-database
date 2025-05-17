@@ -109,7 +109,7 @@ function Navbar() {
               Online Ordering System
             </Typography>
 
-            {/* Dark/Light Mode Toggle */}
+            {/* Dark/Light Mode Toggle
             <IconButton
               sx={{ ml: 1 }}
               onClick={toggleColorMode}
@@ -117,6 +117,7 @@ function Navbar() {
             >
               {isDark ? <Brightness7Icon /> : <Brightness4Icon />}
             </IconButton>
+            */}
           </Box>
 
           {/* Desktop View */}
