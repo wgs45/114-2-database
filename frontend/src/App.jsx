@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+// import { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -20,11 +20,11 @@ import AdminPanel from "./pages/AdminPanel";
 import CartProvider from "./context/CartContext.jsx";
 
 function App() {
-  console.log("🧩 CartProvider rendered at", new Date().toLocaleTimeString());
+  // console.log("🧩 CartProvider rendered at", new Date().toLocaleTimeString());
 
-  useEffect(() => {
-    console.log("App mounted");
-  }, []);
+  // useEffect(() => {
+  //   console.log("App mounted");
+  // }, []);
 
   return (
     <CartProvider>

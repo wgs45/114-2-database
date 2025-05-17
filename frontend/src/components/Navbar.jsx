@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
-import { ColorModeContext } from "../context/ThemeContext";
+// import { ColorModeContext } from "../context/ThemeContext";
 import {
   AppBar,
   Toolbar,
@@ -21,8 +21,8 @@ import {
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import MenuIcon from "@mui/icons-material/Menu";
 import { motion } from "framer-motion";
-import Brightness4Icon from "@mui/icons-material/Brightness4";
-import Brightness7Icon from "@mui/icons-material/Brightness7";
+// import Brightness4Icon from "@mui/icons-material/Brightness4";
+// import Brightness7Icon from "@mui/icons-material/Brightness7";
 
 function Navbar() {
   const { user, logout } = useContext(AuthContext);
@@ -31,8 +31,8 @@ function Navbar() {
   const [scrolled, setScrolled] = useState(false);
 
   const theme = useTheme();
-  const { toggleColorMode } = useContext(ColorModeContext);
-  const isDark = theme.palette.mode === "dark";
+  // const { toggleColorMode } = useContext(ColorModeContext);
+  // const isDark = theme.palette.mode === "dark";
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   const handleMenuOpen = (event) => setAnchorEl(event.currentTarget);
@@ -76,15 +76,27 @@ function Navbar() {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: -10 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4, ease: "easeOut" }}
+      initial={{ opacity: 0, x: 30 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ duration: 0.4, ease: "easeOut", delay: 0.1 }}
     >
       <AppBar
         position="fixed"
-        color="primary"
-        elevation={scrolled ? 6 : 3}
-        sx={{ transition: "all 0.5s ease" }}
+        color="transparent"
+        elevation={scrolled ? 6 : 0}
+        sx={{
+          backdropFilter: "blur(12px)",
+          WebkitBackdropFilter: "blur(12px)", // For Safari compatibility
+          backgroundColor: scrolled
+            ? "rgba(18, 18, 18, 0.6)" // Dark translucent for scrolled
+            : "rgba(18, 18, 18, 0.3)", // Slightly lighter when idle
+          borderBottom: scrolled
+            ? "1px solid rgba(255, 255, 255, 0.1)"
+            : "none",
+          transition:
+            "background-color 0.5s ease-in-out, backdrop-filter 0.5s ease-in-out",
+          boxShadow: scrolled ? "0 8px 24px rgba(0, 0, 0, 0.4)" : "none",
+        }}
       >
         <Toolbar sx={{ justifyContent: "space-between" }}>
           {/* Left: Logo */}
@@ -131,10 +143,11 @@ function Navbar() {
                     component={Link}
                     to={link.to}
                     sx={{
-                      transition: "all 0.5s ease",
-                      "&hover": {
-                        backgroundColor: "rgba(255, 255, 255, 0.08)",
-                        transform: "scale(1.05)",
+                      transition: "all 0.4s ease-in-out",
+                      "&:hover": {
+                        backgroundColor: "rgba(255, 255, 255, 0.1)",
+                        transform: "scale(1.08)",
+                        boxShadow: "0 0 10px rgba(255,255,255,0.3)",
                       },
                     }}
                   >
@@ -177,10 +190,34 @@ function Navbar() {
                   </>
                 ) : (
                   <>
-                    <Button color="inherit" component={Link} to="/login">
+                    <Button
+                      color="inherit"
+                      component={Link}
+                      to="/login"
+                      sx={{
+                        transition: "all 0.4s ease-in-out",
+                        "&:hover": {
+                          backgroundColor: "rgba(255, 255, 255, 0.1)",
+                          transform: "scale(1.08)",
+                          boxShadow: "0 0 10px rgba(255,255,255,0.3)",
+                        },
+                      }}
+                    >
                       Sign in
                     </Button>
-                    <Button color="inherit" component={Link} to="/register">
+                    <Button
+                      color="inherit"
+                      component={Link}
+                      to="/register"
+                      sx={{
+                        transition: "all 0.4s ease-in-out",
+                        "&:hover": {
+                          backgroundColor: "rgba(255, 255, 255, 0.1)",
+                          transform: "scale(1.08)",
+                          boxShadow: "0 0 10px rgba(255,255,255,0.3)",
+                        },
+                      }}
+                    >
                       Sign up
                     </Button>
                   </>
@@ -199,18 +236,24 @@ function Navbar() {
                 onClose={toggleDrawer}
                 PaperProps={{
                   sx: {
-                    backgroundColor:
-                      theme.palette.mode === "dark" ? "#121212" : "#fff",
-                    color: theme.palette.mode === "dark" ? "#fff" : "#000",
+                    backgroundColor: scrolled
+                      ? "rgba(18, 18, 18, 0.6)"
+                      : "rgba(18, 18, 18, 0.3)",
+                    backdropFilter: "blur(12px)",
+                    WebkitBackdropFilter: "blur(12px)",
+                    boxShadow: scrolled
+                      ? "0 8px 32px rgba(0,0,0,0.6)"
+                      : "0 4px 16px rgba(0,0,0,0.3)",
+                    color: "#fff",
                     width: 255,
+                    borderLeft: "1px solid rgba(255, 255, 255, 0.1)",
+                    transition:
+                      "background-color 0.5s ease-in-out, backdrop-filter 0.5s ease-in-out, box-shadow 0.5s ease-in-out",
                     "& .MuiListItemText-root": {
-                      color: "#ffffff", // list text
+                      color: "#ffffff",
                     },
                     "& .MuiButtonBase-root": {
-                      color: "#ffffff", // clickable items
-                    },
-                    "& .MuiDrawer paper": {
-                      transition: "transform 0.5s ease-in-out",
+                      color: "#ffffff",
                     },
                   },
                 }}

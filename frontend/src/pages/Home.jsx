@@ -18,6 +18,39 @@ const fadeIn = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.8 } },
 };
 
+// Food Card component
+const FoodCard = ({ image, title, description, price }) => {
+  <Grid>
+    <motion.div
+      whileHover={{ scale: 1.03 }}
+      transition={{ type: "spring", stiffness: 200 }}
+    >
+      <Box
+        sx={{
+          borderRadius: "16px",
+          overflow: "hidden",
+          backdropFilter: "blur(8px)",
+          background: "rgba(255, 255, 255, 0.05)",
+          border: "1px solid rgba(255, 255, 255, 0.1)",
+          boxShadow: "0 8px 30px rgba(0, 0, 0, 0.3)",
+          color: "white",
+        }}
+      >
+        <img
+          src={image}
+          alt={title}
+          style={{
+            width: "100%",
+            height: "200px",
+            objectFit: "cover",
+          }}
+        />
+        <Box sx={{ p: 3 }}></Box>
+      </Box>
+    </motion.div>
+  </Grid>;
+};
+
 const Home = () => {
   const theme = useTheme();
 

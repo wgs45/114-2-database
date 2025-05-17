@@ -17,8 +17,8 @@ const OrderHistory = () => {
 
   useEffect(() => {
     if (user && token) {
-      console.log("User:", user);
-      console.log("JWT Token: ", token);
+      // console.log("User:", user);
+      // console.log("JWT Token: ", token);
       axios
         .get(`http://localhost:3001/api/orders/users/${user.id}`, {
           headers: {
@@ -26,7 +26,7 @@ const OrderHistory = () => {
           },
         })
         .then((res) => {
-          console.log("Fetched Orders: ", res.data);
+          // console.log("Fetched Orders: ", res.data);
           setOrders(res.data);
           setLoading(false);
         })

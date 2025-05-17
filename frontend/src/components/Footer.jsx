@@ -37,9 +37,9 @@ const Footer = () => {
               underline="hover"
               color="text.secondary"
               sx={{
-                transition: "color 0.3s ease",
+                transition: "all 0.4s ease-in-out",
                 "&:hover": {
-                  color: "primary.main",
+                  transform: "scale(1.08)",
                 },
               }}
             >
@@ -50,9 +50,9 @@ const Footer = () => {
               underline="hover"
               color="text.secondary"
               sx={{
-                transition: "color 0.3s ease",
+                transition: "all 0.4s ease-in-out",
                 "&:hover": {
-                  color: "primary.main",
+                  transform: "scale(1.08)",
                 },
               }}
             >
@@ -63,9 +63,9 @@ const Footer = () => {
               underline="hover"
               color="text.secondary"
               sx={{
-                transition: "color 0.3s ease",
+                transition: "all 0.4s ease-in-out",
                 "&:hover": {
-                  color: "primary.main",
+                  transform: "scale(1.08)",
                 },
               }}
             >

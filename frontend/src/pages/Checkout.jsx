@@ -23,6 +23,7 @@ const Checkout = () => {
   const [paymentMethod, setPaymentMethod] = useState("");
   const [error, setError] = useState("");
   const [checkoutInProgress, setCheckoutInProgress] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   // Check if cart is empty
   useEffect(() => {
@@ -38,7 +39,7 @@ const Checkout = () => {
     .toFixed(2);
 
   const handleCheckout = async () => {
-    console.log("Cart items as checkout: ", cartItems);
+    // console.log("Cart items as checkout: ", cartItems);
 
     setError(""); // Reset error
     setCheckoutInProgress(true); // Protects against empty cart redirect
@@ -46,6 +47,18 @@ const Checkout = () => {
     // Check for required fields
     if (!name || !address || !paymentMethod) {
       setError("Please fill out all fields!");
+      return;
+    }
+
+    // name validation
+    if (!name.trim() || name.length < 3) {
+      setError("Please enter a valid name (min 3 characters).");
+      return;
+    }
+
+    // address validation
+    if (!address.trim() || address.length < 5) {
+      setError("Please enter a valid address (min 5 characters).");
       return;
     }
 
@@ -60,6 +73,7 @@ const Checkout = () => {
       return;
     }
 
+    setLoading(true);
     try {
       const token = localStorage.getItem("token");
 
@@ -88,7 +102,7 @@ const Checkout = () => {
         },
       });
 
-      console.log("Cart items as checkout: ", cartItems);
+      // console.log("Cart items as checkout: ", cartItems);
       clearCart();
 
       navigate("/confirmation");
@@ -96,6 +110,8 @@ const Checkout = () => {
       console.error(err);
       setError("Failed to place order. Please try again!");
       setCheckoutInProgress(false); // On failure, allow cart check again
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -148,12 +164,13 @@ const Checkout = () => {
 
       <Button
         variant="contained"
+        disabled={loading}
         color="primary"
         onClick={handleCheckout}
         fullWidth
         sx={{ mt: 2 }}
       >
-        Place Order
+        {loading ? "Placing Order..." : "Place Order"}
       </Button>
     </Container>
   );
