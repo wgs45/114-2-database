@@ -8,6 +8,8 @@ import {
   ListItem,
   Divider,
   Box,
+  CircularProgress,
+  Paper,
 } from "@mui/material";
 
 const OrderHistory = () => {
@@ -41,40 +43,68 @@ const OrderHistory = () => {
   }, [user, token]);
 
   return (
-    <Container>
-      <Typography variant="h4" gutterBottom>
-        Order History
+    <Container sx={{ mt: 5 }}>
+      <Typography
+        variant="h4"
+        gutterBottom
+        sx={{ color: "primary.main", fontWeight: "600" }}
+      >
+        🧾 Order History
       </Typography>
 
       {loading ? (
-        <Typography>Loading...</Typography>
+        <Box sx={{ display: "flex", justifyContent: "center", mt: 5 }}>
+          <CircularProgress color="success" />
+        </Box>
       ) : orders.length === 0 ? (
-        <Typography>No orders found.</Typography>
+        <Typography variant="body1" sx={{ mt: 3 }}>
+          You haven't placed any orders yet, Dear Customer~ 💭
+        </Typography>
       ) : (
         <List>
           {orders.map((order) => (
             <React.Fragment key={order.id}>
-              <ListItem alignItems="flex-start">
-                <Box>
-                  <Typography variant="h6">Order #{order.id}</Typography>
-                  <Typography variant="body1">
+              <Paper
+                elevation={3}
+                sx={{
+                  backgroundColor: "#1a1a1a",
+                  color: "#d0fdd2",
+                  borderRadius: 2,
+                  p: 2,
+                  mb: 2,
+                  transition:
+                    "transform 0.4s ease-in-out, box-shadow 0.4s ease-in-out",
+                  "&:hover": {
+                    transform: "scale(1.03)",
+                    boxShadow: "0 8px 16px rgba(0, 255, 128, 0.3)",
+                  },
+                }}
+              >
+                <ListItem
+                  alignItems="flex-start"
+                  sx={{ flexDirection: "column", alignItems: "start" }}
+                >
+                  <Typography variant="h6" sx={{ fontWeight: 600, mb: 1 }}>
+                    🛒 Order #{order.id}
+                  </Typography>
+                  <Typography variant="body1" gutterBottom>
                     Name: <strong>{order.customer_name || order.name}</strong>
                   </Typography>
 
                   {order.address && (
-                    <Typography variant="body1">
+                    <Typography variant="body1" gutterBottom>
                       Address: {order.address}
                     </Typography>
                   )}
 
                   {order.payment_method && (
-                    <Typography variant="body1">
+                    <Typography variant="body1" gutterBottom>
                       Payment: {order.payment_method}
                     </Typography>
                   )}
 
                   {order.restaurant_name && (
-                    <Typography variant="body1">
+                    <Typography variant="body1" gutterBottom>
                       Restaurant: {order.restaurant_name}
                     </Typography>
                   )}
@@ -85,9 +115,8 @@ const OrderHistory = () => {
                       ? new Date(order.created_at).toLocaleString()
                       : "N/A"}
                   </Typography>
-                </Box>
-              </ListItem>
-              <Divider />
+                </ListItem>
+              </Paper>
             </React.Fragment>
           ))}
         </List>

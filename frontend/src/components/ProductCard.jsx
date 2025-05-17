@@ -24,11 +24,10 @@ const ProductCard = ({ product }) => {
         boxShadow: 3,
         overflow: "hidden",
         bgcolor: "Background.paper",
-
         transition: "transform 0.4s ease-in-out, box-shadow 0.4s ease-in-out",
         "&:hover": {
-          transform: "translateY(-5px) scale(1.03)",
-          boxShadow: 8,
+          transform: "translateY(-6px) scale(1.03)",
+          boxShadow: "0 8px 20px rgba(0, 255, 128, 0.25)",
         },
       }}
     >

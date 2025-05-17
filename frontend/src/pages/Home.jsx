@@ -34,6 +34,10 @@ const FoodCard = ({ image, title, description, price }) => (
           border: "1px solid rgba(255, 255, 255, 0.1)",
           boxShadow: "0 8px 30px rgba(0,0,0,0.3)",
           color: "white",
+          transition: "box-shadow 0.4s ease-in-out",
+          "&:hover": {
+            boxShadow: "0 12px 40px rgba(255, 255, 255, 0.1)",
+          },
         }}
       >
         <img
@@ -55,15 +59,23 @@ const FoodCard = ({ image, title, description, price }) => (
           <Typography fontWeight="bold" sx={{ mb: 2 }}>
             NT ${price}
           </Typography>
+
           <Button
             to="/products"
             component={Link}
             variant="contained"
             fullWidth
             sx={{
-              background: "linear-gradient(135deg, #5A45FF, #874FFF)",
+              backgroundColor: "#fff",
+              color: "#333",
               fontWeight: 600,
               borderRadius: "8px",
+              transition: "transform 0.3s ease, box-shadow 0.3s ease",
+              "&:hover": {
+                transform: "scale(1.05)",
+                boxShadow: "0 6px 20px rgba(255, 255, 255, 0.15)",
+                backgroundColor: "#f0f0f0",
+              },
             }}
           >
             Browse Product
@@ -118,12 +130,19 @@ const Home = () => {
                 variant="contained"
                 size="large"
                 sx={{
-                  background: "linear-gradient(135deg, #5A45FF, #874FFF)",
+                  backgroundColor: "#fff",
+                  color: "#111",
                   px: 4,
                   py: 1.5,
                   fontWeight: 600,
                   borderRadius: "12px",
-                  boxShadow: "0 4px 20px rgba(90,69,255,0.4)",
+                  transition: "transform 0.3s ease, box-shadow 0.3s ease",
+                  boxShadow: "0 4px 20px rgba(255,255,255,0.15)",
+                  "&:hover": {
+                    transform: "scale(1.05)",
+                    boxShadow: "0 6px 30px rgba(255,255,255,0.25)",
+                    backgroundColor: "#f0f0f0",
+                  },
                 }}
               >
                 Browse Menu
