@@ -1,9 +1,12 @@
 const express = require("express");
 const router = express.Router();
-const connection = require("../db/index"); // Import the pool connection
-const { requireAuth } = require("../middleware/authMiddleware"); // ⚠️ Don't forget this or you'll get "req.user is undefined" again
+const connection = require("../db/index"); // Import MySQL connection pool
+const { requireAuth } = require("../middleware/authMiddleware"); // Middleware to verify user token
 
-// POST /api/orders
+// ============================
+// 📦 POST /api/orders
+// ============================
+// Create a new order for the authenticated user
 router.post("/", requireAuth, async (req, res) => {
   const {
     customer_name,
@@ -13,8 +16,10 @@ router.post("/", requireAuth, async (req, res) => {
     address,
     payment_method,
   } = req.body;
-  const user_id = req.user.id;
 
+  const user_id = req.user.id; // Extract user ID from the decoded JWT
+
+  // Validate request body
   if (
     !customer_name ||
     !items ||
@@ -28,12 +33,12 @@ router.post("/", requireAuth, async (req, res) => {
     return res.status(400).json({ error: "Missing or invalid order data" });
   }
 
-  const conn = await connection.getConnection();
+  const conn = await connection.getConnection(); // Get a dedicated DB connection from pool
 
   try {
-    await conn.beginTransaction();
+    await conn.beginTransaction(); // Start SQL transaction
 
-    // Insert the order with all required info
+    // Insert new order into `orders` table
     const [orderResult] = await conn.query(
       `INSERT INTO orders 
         (customer_name, address, payment_method, total, user_id, restaurant_id, status) 
@@ -41,12 +46,12 @@ router.post("/", requireAuth, async (req, res) => {
       [customer_name, address, payment_method, total, user_id, restaurant_id],
     );
 
-    const order_id = orderResult.insertId;
+    const order_id = orderResult.insertId; // Get the newly created order ID
 
-    // Insert each order item linked to the order_id
+    // Loop through items and insert each into `order_items` table
     for (const item of items) {
       const { product_id, quantity } = item;
-      if (!product_id || !quantity) continue;
+      if (!product_id || !quantity) continue; // Skip invalid items
 
       await conn.query(
         "INSERT INTO order_items (order_id, product_id, quantity) VALUES (?, ?, ?)",
@@ -54,20 +59,24 @@ router.post("/", requireAuth, async (req, res) => {
       );
     }
 
-    await conn.commit();
-    conn.release();
+    await conn.commit(); // Commit transaction if all insertions succeed
+    conn.release(); // Release DB connection back to the pool
 
+    // Return success response with the new order ID
     res.status(201).json({ success: true, message: "Order placed", order_id });
   } catch (err) {
-    await conn.rollback();
-    conn.release();
+    await conn.rollback(); // Roll back changes if anything fails
+    conn.release(); // Always release the connection
 
     console.error("🔥 Database insert error!", err);
     res.status(500).json({ error: "Failed to place order" });
   }
 });
 
-// GET /api/orders/users/:id
+// ============================
+// 🧾 GET /api/orders/users/:id
+// ============================
+// Fetch all orders placed by a specific user (authenticated)
 router.get("/users/:id", requireAuth, async (req, res) => {
   const userId = req.params.id;
 
@@ -82,7 +91,8 @@ router.get("/users/:id", requireAuth, async (req, res) => {
       `,
       [userId],
     );
-    res.json(orders);
+
+    res.json(orders); // Return list of orders (most recent first)
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Failed to fetch orders" });
